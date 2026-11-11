@@ -1,0 +1,6 @@
+# Força fim de linha "LF" (padrão Linux) em todos os arquivos de texto.
+# Sem isso, o Git no Windows pode converter para "CRLF" e o bash do container
+# quebra ao rodar os scripts (erro "$'\r': command not found").
+* text=auto eol=lf
+*.bmp binary
+*.png binary

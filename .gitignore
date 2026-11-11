@@ -47,7 +47,7 @@ build-*/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
+# (o "Makefile" NAO e ignorado: o professor exige o Makefile no repositorio)
 install_manifest.txt
 compile_commands.json
 
@@ -66,3 +66,11 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# ---- Projeto Mandelbrot ----
+# Executaveis gerados pelo Makefile (no Linux nao tem extensao .exe)
+bin/
+# Imagens grandes (nao fazem parte da entrega)
+*.bmp
+# Anotacoes de contexto para o assistente (nao fazem parte da entrega)
+CONTEXTO_CLAUDE.md

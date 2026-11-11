@@ -1,0 +1,6 @@
+# Arquivos que NÃO precisam ser enviados ao "docker build"
+# (a imagem só precisa do Dockerfile; o código entra depois, espelhado com -v)
+.git
+bin
+resultados
+*.exe
