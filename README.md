@@ -134,15 +134,20 @@ O perfil mede a fração serial `f ≈ 0,8%` (alocar e zerar o vetor, somar e im
 
 1. **Desbalanceamento de carga** — a causa nº 1 neste problema. Com divisão estática, o tempo paralelo é o do
    pedaço mais caro. O perfil prevê o teto em blocos (2 → 1,98; 4 → 2,1; 8 → 3,4; 16 → 6,3), e as curvas de
-   `static` e de MPI `bloco` seguem esse teto, não Amdahl. `dynamic` e MPI `ciclico` resolvem distribuindo as
+   `static` e de MPI `bloco` seguem esse teto, não Amdahl: medimos `static` 2,04 / 3,28 / 5,81 e `bloco`
+   2,04 / 3,19 com 4 / 8 / 16 — Amdahl prometia 3,9 / 7,6 / 14,3. `dynamic` e MPI `ciclico` resolvem distribuindo as
    linhas caras entre todos. A coluna *desbalanceamento* (maior tempo ÷ tempo médio) mostra isso diretamente.
 2. **Overhead de comunicação (MPI)** — no fim, o rank 0 recebe a imagem inteira (`W·H` valores `long`:
    32 MB em 2000×2000) via `MPI_Gatherv` e reorganiza as linhas. Esse custo não diminui com mais processos;
    cresce em proporção, então a eficiência do MPI cai mais rápido que a do OpenMP, que não copia nada.
-3. **Núcleos lógicos × físicos (hyper-threading)** — `nproc` conta núcleos lógicos. Duas threads no mesmo
-   núcleo físico dividem as mesmas unidades de ponto flutuante; como o Mandelbrot é quase só conta, o ganho
-   depois do número de núcleos físicos é pequeno. Com mais threads que núcleos lógicos (16 numa máquina de 8),
-   a curva satura: só há troca de contexto.
+3. **Núcleos lógicos × físicos (SMT / hyper-threading)** — a máquina medida (Ryzen 7 5700X3D) tem **8
+   núcleos físicos e 16 lógicos**. Até 8 threads, o `dynamic` fica perto do ideal (7,61 com 8, eficiência
+   95%). De 8 para 16 o speedup ainda sobe, mas só para 11,18 (eficiência 70%): as threads 9 a 16 não ganham
+   núcleos novos, dividem um núcleo físico com outra thread. Elas ajudam porque o laço do Mandelbrot é uma
+   **cadeia de dependências** (cada iteração precisa do `zr`/`zi` da anterior): uma thread sozinha deixa as
+   unidades de ponto flutuante esperando o resultado anterior, e a segunda thread do núcleo usa esses
+   intervalos. É um ganho parcial (~47%), nunca um núcleo inteiro. O mesmo efeito aparece na escalabilidade
+   fraca: eficiência ~99% até 8 e 90% com 16.
 4. **Overhead de criar e sincronizar threads** — criar a equipe, a fila do `dynamic` e a barreira final. Em
    imagens pequenas isso pesa; em 2000×2000 é desprezível.
 5. **False sharing** — praticamente **não acontece** aqui, e isso é uma escolha de projeto: cada thread
@@ -151,7 +156,8 @@ O perfil mede a fração serial `f ≈ 0,8%` (alocar e zerar o vetor, somar e im
    (`collapse(2)` com pedaços pequenos), threads vizinhas escreveriam na mesma linha de cache o tempo todo.
 6. **Banda de memória** — também **não é o gargalo**: cada pixel faz em média 177 iterações só com
    registradores e escreve 8 bytes no fim. O problema é limitado por CPU (*compute-bound*), ao contrário da
-   multiplicação de matrizes, por exemplo. Por isso o speedup acompanha o número de núcleos físicos.
+   multiplicação de matrizes, por exemplo. Por isso o speedup acompanha o número de núcleos físicos, e o
+   cache de 96 MB do processador não faz diferença aqui.
 
 **Escalabilidade forte × fraca.** Na forte, o trabalho por unidade diminui e os overheads fixos pesam cada vez
 mais. Na fraca, o trabalho por unidade é constante; a eficiência cai só pelo que cresce com p (comunicação
