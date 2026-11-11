@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="75" y="30" font-size="19" font-weight="bold" fill="#1f2933">Eficiencia: escalabilidade forte e fraca</text>
+<text x="75" y="52" font-size="13" fill="#52606d">forte: E = S/p com 2000x2000 fixo;  fraca: E = T(1)/T(p) com ~1.00 milhao de pixels por unidade</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="67.0" y="464.0" font-size="12" text-anchor="end" fill="#52606d">0%</text>
+<line x1="75.0" y1="395.0" x2="620.0" y2="395.0" stroke="#e4e7eb"/>
+<text x="67.0" y="399.0" font-size="12" text-anchor="end" fill="#52606d">20%</text>
+<line x1="75.0" y1="330.0" x2="620.0" y2="330.0" stroke="#e4e7eb"/>
+<text x="67.0" y="334.0" font-size="12" text-anchor="end" fill="#52606d">40%</text>
+<line x1="75.0" y1="265.0" x2="620.0" y2="265.0" stroke="#e4e7eb"/>
+<text x="67.0" y="269.0" font-size="12" text-anchor="end" fill="#52606d">60%</text>
+<line x1="75.0" y1="200.0" x2="620.0" y2="200.0" stroke="#e4e7eb"/>
+<text x="67.0" y="204.0" font-size="12" text-anchor="end" fill="#52606d">80%</text>
+<line x1="75.0" y1="135.0" x2="620.0" y2="135.0" stroke="#e4e7eb"/>
+<text x="67.0" y="139.0" font-size="12" text-anchor="end" fill="#52606d">100%</text>
+<line x1="75.0" y1="70.0" x2="620.0" y2="70.0" stroke="#e4e7eb"/>
+<text x="67.0" y="74.0" font-size="12" text-anchor="end" fill="#52606d">120%</text>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="75.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">1</text>
+<line x1="211.2" y1="70.0" x2="211.2" y2="460.0" stroke="#e4e7eb"/>
+<text x="211.2" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">2</text>
+<line x1="347.5" y1="70.0" x2="347.5" y2="460.0" stroke="#e4e7eb"/>
+<text x="347.5" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">4</text>
+<line x1="483.8" y1="70.0" x2="483.8" y2="460.0" stroke="#e4e7eb"/>
+<text x="483.8" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">8</text>
+<line x1="620.0" y1="70.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="620.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">16</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#7b8794"/>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#7b8794"/>
+<text x="347.5" y="505.0" font-size="13" text-anchor="middle" fill="#1f2933">threads / processos</text>
+<text transform="translate(20 265.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#1f2933">eficiencia</text>
+<path d="M75.0 136.8 L211.2 142.0 L347.5 146.2 L483.8 150.7 L620.0 233.0" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="75.0" cy="136.8" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=1 -> 99.45</title></circle>
+<circle cx="211.2" cy="142.0" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=2 -> 97.86</title></circle>
+<circle cx="347.5" cy="146.2" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=4 -> 96.57</title></circle>
+<circle cx="483.8" cy="150.7" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=8 -> 95.17</title></circle>
+<circle cx="620.0" cy="233.0" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=16 -> 69.85</title></circle>
+<line x1="640.0" y1="80.0" x2="666.0" y2="80.0" stroke="#dc2626" stroke-width="2.5"/>
+<text x="674.0" y="84.0" font-size="13" fill="#1f2933">forte - OpenMP dynamic</text>
+<path d="M75.0 141.2 L211.2 146.3 L347.5 149.7 L483.8 164.1" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="75.0" cy="141.2" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=1 -> 98.08</title></circle>
+<circle cx="211.2" cy="146.3" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=2 -> 96.52</title></circle>
+<circle cx="347.5" cy="149.7" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=4 -> 95.48</title></circle>
+<circle cx="483.8" cy="164.1" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=8 -> 91.03</title></circle>
+<line x1="640.0" y1="104.0" x2="666.0" y2="104.0" stroke="#ea580c" stroke-width="2.5"/>
+<text x="674.0" y="108.0" font-size="13" fill="#1f2933">forte - MPI ciclico</text>
+<path d="M75.0 135.0 L211.2 137.5 L347.5 136.9 L483.8 135.9 L620.0 168.2" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="75.0" cy="135.0" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=1 -> 100.00</title></circle>
+<circle cx="211.2" cy="137.5" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=2 -> 99.22</title></circle>
+<circle cx="347.5" cy="136.9" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=4 -> 99.41</title></circle>
+<circle cx="483.8" cy="135.9" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=8 -> 99.74</title></circle>
+<circle cx="620.0" cy="168.2" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=16 -> 89.78</title></circle>
+<line x1="640.0" y1="128.0" x2="666.0" y2="128.0" stroke="#2563eb" stroke-width="2.5"/>
+<text x="674.0" y="132.0" font-size="13" fill="#1f2933">fraca - OpenMP dynamic</text>
+<path d="M75.0 135.0 L211.2 143.2 L347.5 148.1 L483.8 164.8" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="75.0" cy="135.0" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=1 -> 100.00</title></circle>
+<circle cx="211.2" cy="143.2" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=2 -> 97.49</title></circle>
+<circle cx="347.5" cy="148.1" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=4 -> 95.97</title></circle>
+<circle cx="483.8" cy="164.8" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=8 -> 90.85</title></circle>
+<line x1="640.0" y1="152.0" x2="666.0" y2="152.0" stroke="#16a34a" stroke-width="2.5"/>
+<text x="674.0" y="156.0" font-size="13" fill="#1f2933">fraca - MPI ciclico</text>
+<path d="M75.0 135.0 L620.0 135.0" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="640.0" y1="176.0" x2="666.0" y2="176.0" stroke="#9aa5b1" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="674.0" y="180.0" font-size="13" fill="#1f2933">ideal (100%)</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="75" y="30" font-size="19" font-weight="bold" fill="#1f2933">Speedup OpenMP por numero de threads - 2000x2000</text>
+<text x="75" y="52" font-size="13" fill="#52606d">S = T(baseline) / T(p); todas as execucoes com o mesmo checksum do baseline</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="67.0" y="464.0" font-size="12" text-anchor="end" fill="#52606d">0</text>
+<line x1="75.0" y1="416.7" x2="620.0" y2="416.7" stroke="#e4e7eb"/>
+<text x="67.0" y="420.7" font-size="12" text-anchor="end" fill="#52606d">2</text>
+<line x1="75.0" y1="373.3" x2="620.0" y2="373.3" stroke="#e4e7eb"/>
+<text x="67.0" y="377.3" font-size="12" text-anchor="end" fill="#52606d">4</text>
+<line x1="75.0" y1="330.0" x2="620.0" y2="330.0" stroke="#e4e7eb"/>
+<text x="67.0" y="334.0" font-size="12" text-anchor="end" fill="#52606d">6</text>
+<line x1="75.0" y1="286.7" x2="620.0" y2="286.7" stroke="#e4e7eb"/>
+<text x="67.0" y="290.7" font-size="12" text-anchor="end" fill="#52606d">8</text>
+<line x1="75.0" y1="243.3" x2="620.0" y2="243.3" stroke="#e4e7eb"/>
+<text x="67.0" y="247.3" font-size="12" text-anchor="end" fill="#52606d">10</text>
+<line x1="75.0" y1="200.0" x2="620.0" y2="200.0" stroke="#e4e7eb"/>
+<text x="67.0" y="204.0" font-size="12" text-anchor="end" fill="#52606d">12</text>
+<line x1="75.0" y1="156.7" x2="620.0" y2="156.7" stroke="#e4e7eb"/>
+<text x="67.0" y="160.7" font-size="12" text-anchor="end" fill="#52606d">14</text>
+<line x1="75.0" y1="113.3" x2="620.0" y2="113.3" stroke="#e4e7eb"/>
+<text x="67.0" y="117.3" font-size="12" text-anchor="end" fill="#52606d">16</text>
+<line x1="75.0" y1="70.0" x2="620.0" y2="70.0" stroke="#e4e7eb"/>
+<text x="67.0" y="74.0" font-size="12" text-anchor="end" fill="#52606d">18</text>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="75.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">1</text>
+<line x1="211.2" y1="70.0" x2="211.2" y2="460.0" stroke="#e4e7eb"/>
+<text x="211.2" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">2</text>
+<line x1="347.5" y1="70.0" x2="347.5" y2="460.0" stroke="#e4e7eb"/>
+<text x="347.5" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">4</text>
+<line x1="483.8" y1="70.0" x2="483.8" y2="460.0" stroke="#e4e7eb"/>
+<text x="483.8" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">8</text>
+<line x1="620.0" y1="70.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="620.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">16</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#7b8794"/>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#7b8794"/>
+<text x="347.5" y="505.0" font-size="13" text-anchor="middle" fill="#1f2933">threads</text>
+<text transform="translate(20 265.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#1f2933">speedup</text>
+<path d="M75.0 438.6 L211.2 417.7 L347.5 415.7 L483.8 388.9 L620.0 334.2" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="75.0" cy="438.6" r="4" fill="#2563eb"><title>static: p=1 -> 0.99</title></circle>
+<circle cx="211.2" cy="417.7" r="4" fill="#2563eb"><title>static: p=2 -> 1.95</title></circle>
+<circle cx="347.5" cy="415.7" r="4" fill="#2563eb"><title>static: p=4 -> 2.04</title></circle>
+<circle cx="483.8" cy="388.9" r="4" fill="#2563eb"><title>static: p=8 -> 3.28</title></circle>
+<circle cx="620.0" cy="334.2" r="4" fill="#2563eb"><title>static: p=16 -> 5.81</title></circle>
+<line x1="640.0" y1="80.0" x2="666.0" y2="80.0" stroke="#2563eb" stroke-width="2.5"/>
+<text x="674.0" y="84.0" font-size="13" fill="#1f2933">static</text>
+<path d="M75.0 438.5 L211.2 417.6 L347.5 376.3 L483.8 295.0 L620.0 217.8" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="75.0" cy="438.5" r="4" fill="#dc2626"><title>dynamic, 1: p=1 -> 0.99</title></circle>
+<circle cx="211.2" cy="417.6" r="4" fill="#dc2626"><title>dynamic, 1: p=2 -> 1.96</title></circle>
+<circle cx="347.5" cy="376.3" r="4" fill="#dc2626"><title>dynamic, 1: p=4 -> 3.86</title></circle>
+<circle cx="483.8" cy="295.0" r="4" fill="#dc2626"><title>dynamic, 1: p=8 -> 7.61</title></circle>
+<circle cx="620.0" cy="217.8" r="4" fill="#dc2626"><title>dynamic, 1: p=16 -> 11.18</title></circle>
+<line x1="640.0" y1="104.0" x2="666.0" y2="104.0" stroke="#dc2626" stroke-width="2.5"/>
+<text x="674.0" y="108.0" font-size="13" fill="#1f2933">dynamic, 1</text>
+<path d="M75.0 438.6 L211.2 417.5 L347.5 402.3 L483.8 346.4 L620.0 248.3" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="75.0" cy="438.6" r="4" fill="#16a34a"><title>guided: p=1 -> 0.99</title></circle>
+<circle cx="211.2" cy="417.5" r="4" fill="#16a34a"><title>guided: p=2 -> 1.96</title></circle>
+<circle cx="347.5" cy="402.3" r="4" fill="#16a34a"><title>guided: p=4 -> 2.66</title></circle>
+<circle cx="483.8" cy="346.4" r="4" fill="#16a34a"><title>guided: p=8 -> 5.25</title></circle>
+<circle cx="620.0" cy="248.3" r="4" fill="#16a34a"><title>guided: p=16 -> 9.77</title></circle>
+<line x1="640.0" y1="128.0" x2="666.0" y2="128.0" stroke="#16a34a" stroke-width="2.5"/>
+<text x="674.0" y="132.0" font-size="13" fill="#1f2933">guided</text>
+<path d="M75.0 438.3 L211.2 416.7 L347.5 373.3 L483.8 286.7 L620.0 113.3" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="640.0" y1="152.0" x2="666.0" y2="152.0" stroke="#9aa5b1" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="674.0" y="156.0" font-size="13" fill="#1f2933">ideal (S = p)</text>
+<path d="M75.0 438.3 L211.2 417.0 L347.5 375.3 L483.8 295.5 L620.0 149.1" fill="none" stroke="#1f2933" stroke-width="1.5" stroke-dasharray="6 4"/>
+<line x1="640.0" y1="176.0" x2="666.0" y2="176.0" stroke="#1f2933" stroke-width="2.5" stroke-dasharray="6 4"/>
+<text x="674.0" y="180.0" font-size="13" fill="#1f2933">Amdahl (f = 0.77%)</text>
+</svg>

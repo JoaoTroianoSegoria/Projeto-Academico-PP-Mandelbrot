@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="520" viewBox="0 0 820 520" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="75" y="30" font-size="19" font-weight="bold" fill="#1f2933">Tempo de execucao - 2000x2000</text>
+<text x="75" y="52" font-size="13" fill="#52606d">mediana de 3 execucoes; baseline do professor = 1.789 s</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="67.0" y="464.0" font-size="12" text-anchor="end" fill="#52606d">0.0</text>
+<line x1="75.0" y1="362.5" x2="620.0" y2="362.5" stroke="#e4e7eb"/>
+<text x="67.0" y="366.5" font-size="12" text-anchor="end" fill="#52606d">0.5</text>
+<line x1="75.0" y1="265.0" x2="620.0" y2="265.0" stroke="#e4e7eb"/>
+<text x="67.0" y="269.0" font-size="12" text-anchor="end" fill="#52606d">1.0</text>
+<line x1="75.0" y1="167.5" x2="620.0" y2="167.5" stroke="#e4e7eb"/>
+<text x="67.0" y="171.5" font-size="12" text-anchor="end" fill="#52606d">1.5</text>
+<line x1="75.0" y1="70.0" x2="620.0" y2="70.0" stroke="#e4e7eb"/>
+<text x="67.0" y="74.0" font-size="12" text-anchor="end" fill="#52606d">2.0</text>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="75.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">1</text>
+<line x1="211.2" y1="70.0" x2="211.2" y2="460.0" stroke="#e4e7eb"/>
+<text x="211.2" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">2</text>
+<line x1="347.5" y1="70.0" x2="347.5" y2="460.0" stroke="#e4e7eb"/>
+<text x="347.5" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">4</text>
+<line x1="483.8" y1="70.0" x2="483.8" y2="460.0" stroke="#e4e7eb"/>
+<text x="483.8" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">8</text>
+<line x1="620.0" y1="70.0" x2="620.0" y2="460.0" stroke="#e4e7eb"/>
+<text x="620.0" y="480.0" font-size="12" text-anchor="middle" fill="#52606d">16</text>
+<line x1="75.0" y1="460.0" x2="620.0" y2="460.0" stroke="#7b8794"/>
+<line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#7b8794"/>
+<text x="347.5" y="505.0" font-size="13" text-anchor="middle" fill="#1f2933">threads (OpenMP) / processos (MPI)</text>
+<text transform="translate(20 265.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#1f2933">tempo (s)</text>
+<path d="M75.0 106.6 L211.2 281.4 L347.5 289.2 L483.8 353.6 L620.0 399.9" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<circle cx="75.0" cy="106.6" r="4" fill="#2563eb"><title>OpenMP static: p=1 -> 1.81</title></circle>
+<circle cx="211.2" cy="281.4" r="4" fill="#2563eb"><title>OpenMP static: p=2 -> 0.92</title></circle>
+<circle cx="347.5" cy="289.2" r="4" fill="#2563eb"><title>OpenMP static: p=4 -> 0.88</title></circle>
+<circle cx="483.8" cy="353.6" r="4" fill="#2563eb"><title>OpenMP static: p=8 -> 0.55</title></circle>
+<circle cx="620.0" cy="399.9" r="4" fill="#2563eb"><title>OpenMP static: p=16 -> 0.31</title></circle>
+<line x1="640.0" y1="80.0" x2="666.0" y2="80.0" stroke="#2563eb" stroke-width="2.5"/>
+<text x="674.0" y="84.0" font-size="13" fill="#1f2933">OpenMP static</text>
+<path d="M75.0 109.2 L211.2 281.8 L347.5 369.7 L483.8 414.2 L620.0 428.8" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="75.0" cy="109.2" r="4" fill="#dc2626"><title>OpenMP dynamic: p=1 -> 1.80</title></circle>
+<circle cx="211.2" cy="281.8" r="4" fill="#dc2626"><title>OpenMP dynamic: p=2 -> 0.91</title></circle>
+<circle cx="347.5" cy="369.7" r="4" fill="#dc2626"><title>OpenMP dynamic: p=4 -> 0.46</title></circle>
+<circle cx="483.8" cy="414.2" r="4" fill="#dc2626"><title>OpenMP dynamic: p=8 -> 0.23</title></circle>
+<circle cx="620.0" cy="428.8" r="4" fill="#dc2626"><title>OpenMP dynamic: p=16 -> 0.16</title></circle>
+<line x1="640.0" y1="104.0" x2="666.0" y2="104.0" stroke="#dc2626" stroke-width="2.5"/>
+<text x="674.0" y="108.0" font-size="13" fill="#1f2933">OpenMP dynamic</text>
+<path d="M75.0 106.3 L211.2 282.2 L347.5 329.0 L483.8 393.5 L620.0 424.3" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<circle cx="75.0" cy="106.3" r="4" fill="#16a34a"><title>OpenMP guided: p=1 -> 1.81</title></circle>
+<circle cx="211.2" cy="282.2" r="4" fill="#16a34a"><title>OpenMP guided: p=2 -> 0.91</title></circle>
+<circle cx="347.5" cy="329.0" r="4" fill="#16a34a"><title>OpenMP guided: p=4 -> 0.67</title></circle>
+<circle cx="483.8" cy="393.5" r="4" fill="#16a34a"><title>OpenMP guided: p=8 -> 0.34</title></circle>
+<circle cx="620.0" cy="424.3" r="4" fill="#16a34a"><title>OpenMP guided: p=16 -> 0.18</title></circle>
+<line x1="640.0" y1="128.0" x2="666.0" y2="128.0" stroke="#16a34a" stroke-width="2.5"/>
+<text x="674.0" y="132.0" font-size="13" fill="#1f2933">OpenMP guided</text>
+<path d="M75.0 105.6 L211.2 278.7 L347.5 289.1 L483.8 350.5" fill="none" stroke="#9333ea" stroke-width="2.5"/>
+<circle cx="75.0" cy="105.6" r="4" fill="#9333ea"><title>MPI bloco: p=1 -> 1.82</title></circle>
+<circle cx="211.2" cy="278.7" r="4" fill="#9333ea"><title>MPI bloco: p=2 -> 0.93</title></circle>
+<circle cx="347.5" cy="289.1" r="4" fill="#9333ea"><title>MPI bloco: p=4 -> 0.88</title></circle>
+<circle cx="483.8" cy="350.5" r="4" fill="#9333ea"><title>MPI bloco: p=8 -> 0.56</title></circle>
+<line x1="640.0" y1="152.0" x2="666.0" y2="152.0" stroke="#9333ea" stroke-width="2.5"/>
+<text x="674.0" y="156.0" font-size="13" fill="#1f2933">MPI bloco</text>
+<path d="M75.0 104.3 L211.2 279.3 L347.5 368.7 L483.8 412.1" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="75.0" cy="104.3" r="4" fill="#ea580c"><title>MPI ciclico: p=1 -> 1.82</title></circle>
+<circle cx="211.2" cy="279.3" r="4" fill="#ea580c"><title>MPI ciclico: p=2 -> 0.93</title></circle>
+<circle cx="347.5" cy="368.7" r="4" fill="#ea580c"><title>MPI ciclico: p=4 -> 0.47</title></circle>
+<circle cx="483.8" cy="412.1" r="4" fill="#ea580c"><title>MPI ciclico: p=8 -> 0.25</title></circle>
+<line x1="640.0" y1="176.0" x2="666.0" y2="176.0" stroke="#ea580c" stroke-width="2.5"/>
+<text x="674.0" y="180.0" font-size="13" fill="#1f2933">MPI ciclico</text>
+</svg>

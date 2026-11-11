@@ -1,0 +1,44 @@
+W=2000 H=2000  checksum=709817858  tempo=1.805639 s
+
+=== 1. Tempo por trecho (perfil) ===
+trecho                                tempo (s)   % total
+alocacao + zerar vetor (serial)        0.012100    0.665%
+calculo dos pixels (HOTSPOT)           1.805639   99.234%
+soma do checksum                       0.001520    0.084%
+saida (printf)                         0.000324    0.018%
+TOTAL                                  1.819583  100.000%
+
+=== 2. O custo NAO e uniforme (desbalanceamento natural) ===
+iteracoes por pixel: media = 177.5   maximo = 1000
+pixels dentro do conjunto (chegaram a 1000 iteracoes): 17.3%
+tempo por linha: min = 0.006 ms   media = 0.903 ms   max = 3.264 ms   (max/min = 569x)
+
+Carga por faixa horizontal (10 faixas de linhas):
+linhas            tempo (s)  % calculo
+    0-199            0.0017      0.09%  
+  200-399            0.0217      1.20%  #
+  400-599            0.1350      7.48%  #######
+  600-799            0.2929     16.22%  ################
+  800-999            0.4517     25.02%  #########################
+ 1000-1199           0.4530     25.09%  #########################
+ 1200-1399           0.2912     16.13%  ################
+ 1400-1599           0.1351      7.48%  #######
+ 1600-1799           0.0216      1.20%  #
+ 1800-1999           0.0017      0.09%  
+
+Previsao com divisao em BLOCOS contiguos de linhas (sem custo de comunicacao):
+  p=2   bloco mais caro = 0.9030 s  -> speedup maximo em blocos = 2.00 (ideal = 2)
+  p=4   bloco mais caro = 0.8500 s  -> speedup maximo em blocos = 2.12 (ideal = 4)
+  p=8   bloco mais caro = 0.5345 s  -> speedup maximo em blocos = 3.38 (ideal = 8)
+  p=16  bloco mais caro = 0.2955 s  -> speedup maximo em blocos = 6.11 (ideal = 16)
+
+=== 3. Lei de Amdahl ===
+fracao serial f = (total - calculo) / total = 0.00766   ->  fracao paralelizavel = 99.234%
+S(p) = 1 / (f + (1-f)/p)
+  p = 2          : S = 1.98
+  p = 4          : S = 3.91
+  p = 8          : S = 7.59
+  p = 16         : S = 14.35
+  p -> infinito : S_max = 1/f = 130.5
+Complexidade: O(W*H*MAXIT) no pior caso; custo real = W*H*(media de iteracoes) = 7.098e+08 iteracoes
+RESUMO;2000;2000;1.819583;1.805639;0.013944;0.007663

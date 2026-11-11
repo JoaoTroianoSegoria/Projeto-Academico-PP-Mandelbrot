@@ -1,0 +1,11 @@
+data: 2026-11-11 22:33
+cpu: AMD Ryzen 7 5700X3D 8-Core Processor
+nucleos logicos (nproc): 16
+Thread(s) per core:                      2
+Core(s) per socket:                      8
+Socket(s):                               1
+L3 cache:                                96 MiB (1 instance)
+memoria: 7.7 GB
+compilador: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+mpi: mpirun (Open MPI) 4.1.6
+repeticoes: 1 aquecimento + 3 medidas (mediana)
