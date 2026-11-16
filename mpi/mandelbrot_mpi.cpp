@@ -23,6 +23,11 @@
  *                  lento (MPI_MAX) (aulas 07 e 12)
  *   MPI_Gather  -> traz o tempo de cálculo de cada rank, para ver a carga
  *
+ * OVERHEAD DE COMUNICAÇÃO: comunicacao = tempo total - maior tempo de cálculo.
+ * É o tempo que sobra depois que o rank mais lento terminou a conta: as mensagens
+ * (Gatherv + Reduce) e a reorganização das linhas no rank 0. O scripts/medir.sh
+ * grava esse valor no CSV para cada -np (coluna comunicacao_s).
+ *
  * Executar:
  *   mpirun -np 4 ./bin/mandelbrot_mpi 2000 2000            -> DEMONSTRAÇÃO: sequencial x bloco x ciclico
  *   mpirun -np 4 ./bin/mandelbrot_mpi 2000 2000 ciclico    -> UMA execução (usada pelo scripts/medir.sh)
@@ -33,6 +38,7 @@
 #include <vector>
 #include <algorithm>
 #include <mpi.h>
+#include <unistd.h>   // usleep
 #include "../comum/mandelbrot_comum.hpp"
 using namespace std;
 
@@ -179,6 +185,20 @@ int main(int argc, char** argv) {
         for (int y = 0; y < H; y++) gabarito += calcula_linha(y, W, H, &imagem[(size_t)y * W]);
         t_seq = MPI_Wtime() - t0;
         printf("sequencial (rank 0 sozinho): checksum=%ld  tempo=%.4f s   (este e o gabarito)\n\n", gabarito, t_seq);
+    }
+    // Enquanto o rank 0 mede o sequencial, os outros ranks esperam DORMINDO.
+    // Um MPI_Barrier comum faz "espera ativa": o processo fica girando num laço
+    // perguntando "já chegou?" e ocupa 100% de um núcleo. No notebook isso esquenta
+    // a CPU, ela baixa a frequência (turbo) e o sequencial fica ~12% mais lento —
+    // o que inflava o speedup (eficiência > 100%, impossível aqui).
+    // MPI_Ibarrier é a barreira NÃO bloqueante: ela começa e devolve na hora; o
+    // MPI_Test pergunta se todos já chegaram e, se não, o rank dorme 1 ms (usleep).
+    MPI_Request barreira;
+    int todos_chegaram = 0;
+    MPI_Ibarrier(MPI_COMM_WORLD, &barreira);
+    while (!todos_chegaram) {
+        MPI_Test(&barreira, &todos_chegaram, MPI_STATUS_IGNORE);
+        if (!todos_chegaram) usleep(1000);
     }
 
     Medida medidas[2];
