@@ -5,32 +5,29 @@
 <title>Marco 1 - Conjunto de Mandelbrot</title>
 <style>
   @page { size: A4; margin: 15mm 16mm 15mm 16mm; }
-  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10.3pt; color: #111; background: #fff; line-height: 1.38; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color: #111; background: #fff; line-height: 1.4; }
   h1 { font-size: 16pt; margin: 0 0 2px; }
-  h2 { font-size: 12pt; margin: 15px 0 6px; border-bottom: 1.5px solid #c8102e; padding-bottom: 2px; color: #c8102e; }
-  h3 { font-size: 10.5pt; margin: 10px 0 4px; }
-  p { margin: 5px 0; text-align: justify; }
+  h2 { font-size: 12pt; margin: 16px 0 6px; border-bottom: 1.5px solid #c8102e; padding-bottom: 2px; color: #c8102e; }
+  h2, h3 { page-break-after: avoid; break-after: avoid; }
+  p { margin: 5px 0; }
   .sub { color: #444; margin-bottom: 8px; }
-  table { border-collapse: collapse; margin: 6px 0 8px; font-size: 9.3pt; }
-  th, td { border: 1px solid #bbb; padding: 3px 7px; text-align: right; vertical-align: top; }
+  table { border-collapse: collapse; margin: 6px 0 8px; font-size: 9.6pt; }
+  th, td { border: 1px solid #bbb; padding: 3px 8px; text-align: right; vertical-align: top; }
   th { background: #f1f1f1; }
   td.l, th.l { text-align: left; }
-  code, pre { font-family: Consolas, "DejaVu Sans Mono", "Courier New", monospace; font-size: 8.8pt; }
-  pre { background: #f6f6f6; border: 1px solid #ddd; padding: 6px 8px; margin: 6px 0; white-space: pre-wrap; line-height: 1.3; }
-  .destaque { background: #fff4d6; border: 1px solid #e6c870; padding: 6px 10px; margin: 8px 0; }
+  td.n { white-space: nowrap; }
+  code { font-family: Consolas, "DejaVu Sans Mono", "Courier New", monospace; font-size: 9.2pt; }
+  ul, ol { margin: 4px 0; padding-left: 20px; }
+  li { margin: 3px 0; }
+  .resumo { background: #fff4d6; border: 1px solid #e6c870; padding: 6px 10px; margin: 8px 0; }
   .lado { display: flex; gap: 16px; align-items: flex-start; }
   .lado > div { flex: 1; }
-  ul { margin: 4px 0; padding-left: 20px; }
-  li { margin: 2px 0; }
-  .pq { page-break-inside: avoid; }
-  .barra { display: inline-block; height: 9px; background: #c8102e; vertical-align: middle; }
-  td.b { text-align: left; width: 170px; }
-  .nota { font-size: 9pt; color: #444; }
-  h2, h3 { page-break-after: avoid; break-after: avoid; }
-  td.n { white-space: nowrap; }
   .fig { display: flex; gap: 14px; align-items: center; margin: 8px 0; page-break-inside: avoid; }
-  .fig img { width: 72mm; border: 1px solid #ccc; }
-  .fig .nota { flex: 1; }
+  .fig img { width: 70mm; border: 1px solid #ccc; }
+  .nota { font-size: 9.3pt; color: #444; }
+  .barra { display: inline-block; height: 9px; background: #c8102e; vertical-align: middle; }
+  td.b { text-align: left; width: 160px; }
+  .pq { page-break-inside: avoid; }
 </style>
 </head>
 <body>
@@ -39,76 +36,70 @@
 <div class="sub">Projeto Acadêmico de Programação Paralela (CCO085) · IESB 2026/2 · Prof. Rodrigo Gonçalves<br>
 <b>Problema 3: Conjunto de Mandelbrot</b> · Repositório: github.com/JoaoTroianoSegoria/Projeto-Academico-PP-Mandelbrot</div>
 
-<h2>1. Identificação do grupo e do problema</h2>
+<h2>1. Grupo e problema</h2>
 <table>
-  <tr><th class="l">Integrante</th><th class="l">Responsabilidade técnica (seção 3 das orientações)</th></tr>
-  <tr><td class="l">João Otavio Troiano Segoria</td><td class="l">1. Baseline e Perfilamento &nbsp;·&nbsp; 3. Versão MPI (memória distribuída)</td></tr>
-  <tr><td class="l">Bruno Nóbrega Souza</td><td class="l">2. Versão OpenMP (memória compartilhada) &nbsp;·&nbsp; medições, gráficos e documentação</td></tr>
+  <tr><th class="l">Integrante</th><th class="l">Responsabilidade</th></tr>
+  <tr><td class="l">João Otavio Troiano Segoria</td><td class="l">Baseline e perfilamento; versão MPI</td></tr>
+  <tr><td class="l">Bruno Nóbrega Souza</td><td class="l">Versão OpenMP; medições, gráficos e documentação</td></tr>
 </table>
-<p>O grupo tem dois integrantes, por isso o João acumula duas frentes. O problema escolhido é o nº 3 da lista, o <b>Conjunto de
-Mandelbrot</b>, cujo aspecto interessante é o <b>desbalanceamento natural de carga</b>: pixels vizinhos podem custar de 1 a 1000
-iterações, o que torna a forma de dividir o trabalho a decisão mais importante da paralelização.</p>
+<p>Somos uma dupla, então o João ficou com duas frentes. Escolhemos o problema nº 3, o <b>Conjunto de Mandelbrot</b>.
+O que torna esse problema interessante é que <b>alguns pontos da imagem dão muito mais trabalho que outros</b>,
+então dividir o trabalho de forma justa entre os núcleos é o grande desafio.</p>
 
-<h2>2. Análise do algoritmo sequencial fornecido</h2>
-<h3>2.1 O que ele calcula</h3>
-<p>Um número complexo tem a forma <i>z = a + b·i</i>, com <i>i² = −1</i>; ele é um ponto do plano (eixo horizontal = parte real,
-eixo vertical = parte imaginária) e seu módulo é |z| = √(a² + b²). O <b>Conjunto de Mandelbrot</b> é o conjunto dos números
-complexos <i>c</i> para os quais a sequência <i>z<sub>0</sub> = 0, z<sub>n+1</sub> = z<sub>n</sub>² + c</i> permanece limitada.
-Se em algum passo |z| &gt; 2, está provado que a sequência diverge (o ponto "escapou" e <b>não</b> pertence ao conjunto).</p>
-<p>O código <code>03_mandelbrot.cpp</code> faz isso para cada pixel de uma imagem W×H:</p>
+<h2>2. O que o programa sequencial faz</h2>
+<p><b>Número complexo.</b> É um número com duas partes, escrito <i>a + b·i</i>, em que <i>i² = −1</i>. Dá para
+pensar nele como um <b>ponto num plano</b>: <i>a</i> é a posição na horizontal e <i>b</i> na vertical. A distância
+desse ponto até o centro (0, 0) se chama <b>módulo</b>: |z| = √(a² + b²).</p>
+<p><b>A regra do Mandelbrot.</b> Escolhe-se um ponto <i>c</i> do plano. Começa-se com <i>z = 0</i> e repete-se a
+conta <b><i>z = z² + c</i></b> várias vezes. Duas coisas podem acontecer:</p>
 <ul>
-  <li>o pixel (x, y) vira o número <i>c = cr + ci·i</i>, com <code>cr = −2,5 + 3,5·x/W</code> e <code>ci = −1,25 + 2,5·y/H</code>
-      — ou seja, a imagem cobre a janela [−2,5; 1,0) × [−1,25; 1,25) do plano complexo;</li>
-  <li>repete <i>z ← z² + c</i>, usando <i>z² = (zr² − zi²) + (2·zr·zi)·i</i>, só com números reais (<code>double</code>);</li>
-  <li>para quando <code>zr² + zi² &gt; 4</code> (equivale a |z| &gt; 2, sem calcular raiz quadrada) ou quando chega a
-      <code>MAXIT = 1000</code> iterações (o ponto é tratado como pertencente ao conjunto);</li>
-  <li>guarda o número de iterações de cada pixel em <code>hist[y·W + x]</code> e imprime o <b>checksum</b>, a soma de todas as
-      iterações. Para uma mesma entrada o checksum é sempre o mesmo: é o <b>gabarito</b> que as versões paralelas terão que reproduzir.</li>
+  <li><i>z</i> <b>se afasta do centro</b> e passa da distância 2: a partir daí ele sempre vai para o infinito.
+      Dizemos que o ponto <b>escapou</b> e ele <b>não</b> faz parte do conjunto;</li>
+  <li><i>z</i> <b>fica sempre perto do centro</b>: o ponto <b>faz parte</b> do conjunto.</li>
 </ul>
+<p><b>O programa do professor</b> (<code>03_mandelbrot.cpp</code>) faz isso para cada pixel de uma imagem:</p>
+<ol>
+  <li>transforma o pixel num ponto <i>c</i> do plano (a imagem cobre de −2,5 a 1,0 na horizontal e de −1,25 a
+      1,25 na vertical);</li>
+  <li>repete <i>z = z² + c</i> até o ponto escapar ou até chegar a <b>1000 repetições</b> (se chegou a 1000,
+      consideramos que ele faz parte do conjunto);</li>
+  <li>guarda quantas repetições aquele pixel precisou;</li>
+  <li>no fim, soma as repetições de todos os pixels. Essa soma é o <b>checksum</b>: é sempre o mesmo número para a
+      mesma imagem, então serve de <b>gabarito</b> para conferir se as versões paralelas calcularam certo.</li>
+</ol>
 <div class="fig">
-  <img src="mandelbrot.png" alt="Conjunto de Mandelbrot na janela do baseline">
-  <div class="nota"><b>Figura 1.</b> A janela calculada pelo baseline ([−2,5; 1,0) no eixo real, horizontal;
-  [−1,25; 1,25) no imaginário, vertical), com a mesma fórmula. <b>Preto</b>: pontos que chegaram a 1000 iterações
-  (pertencem ao conjunto — são os mais caros). <b>Claro</b>: pontos que escaparam logo (baratos). Vermelho forte: a
-  borda, onde os pontos demoram a escapar. As linhas do meio da imagem cortam a região preta; as de cima e de baixo
-  quase não. A figura é simétrica em relação ao eixo real (linha horizontal do meio).</div>
+  <img src="mandelbrot.png" alt="Conjunto de Mandelbrot">
+  <div class="nota"><b>Figura 1.</b> A imagem que o programa calcula (gerada com a mesma fórmula).
+  <b>Preto</b>: pontos que chegaram a 1000 repetições — fazem parte do conjunto e são os <b>mais caros</b>.
+  <b>Claro</b>: pontos que escaparam logo — <b>baratos</b>. As linhas do <b>meio</b> da imagem passam pela parte
+  preta; as de cima e de baixo, quase não. A metade de cima é um espelho da de baixo.</div>
 </div>
-<pre>para y de 0 a H-1:                       // linhas da imagem
-  para x de 0 a W-1:                     // pixels da linha
-    c  = ponto do plano que o pixel (x, y) representa
-    z  = 0;  it = 0
-    enquanto |z|² &lt;= 4 e it &lt; 1000:  z = z² + c;  it++
-    hist[y*W + x] = it
-checksum = soma de hist[]                // validação</pre>
+<p><b>Complexidade.</b> Para uma imagem de W × H pixels, cada pixel faz no máximo 1000 repetições, e cada repetição
+é uma conta simples. Então o tempo é <b>O(W · H · 1000)</b>, ou seja, <b>proporcional ao número de pixels</b>:
+dobrar o número de pixels dobra o tempo. A memória é <b>O(W · H)</b>: um número por pixel (32 MB numa imagem
+2000×2000). Na prática, cada pixel faz em média <b>177,5 repetições</b>, e <b>17,3%</b> dos pixels chegam a 1000.</p>
+<p><b>Ponto importante:</b> um pixel não depende de nenhum outro. Isso facilita paralelizar: cada núcleo pode calcular
+pixels diferentes ao mesmo tempo. A dificuldade é que <b>cada pixel custa diferente</b>.</p>
 
-<h3>2.2 Complexidade</h3>
-<p><b>Tempo: O(W · H · MAXIT)</b> no pior caso — cada um dos W·H pixels faz no máximo MAXIT iterações, e cada iteração custa
-O(1) (algumas multiplicações e somas). <b>Memória: O(W · H)</b> — o vetor <code>hist</code> com um <code>long</code> (8 bytes) por
-pixel: 32 MB para 2000×2000. Na prática o custo é W·H·(média de iterações): na imagem 2000×2000 a média é
-<b>177,5 iterações por pixel</b>, e <b>17,3%</b> dos pixels chegam ao limite de 1000. O tempo cresce
-<b>linearmente com o número de pixels</b> (seção 4). Não há dependência entre pixels: cada um usa só o seu próprio <i>c</i>.
-Isso torna o problema "embaraçosamente paralelo" — mas <b>não uniforme</b>, porque o custo de cada pixel é muito diferente.</p>
-
-<h2>3. Perfilamento</h2>
-<p>Para saber onde o tempo é gasto, o mesmo cálculo foi instrumentado em <code>sequencial/mandelbrot_perfil.cpp</code> (mesmas
-expressões do baseline, sem alterar a lógica): cronometramos cada trecho do programa e também <b>cada linha</b> da imagem.
-Imagem 2000×2000, na máquina descrita na seção 4.</p>
+<h2>3. Perfilamento: onde o programa gasta tempo</h2>
+<p>Fizemos uma cópia do programa com cronômetros (<code>sequencial/mandelbrot_perfil.cpp</code>), sem mudar as
+contas, para medir quanto tempo cada parte leva. Imagem 2000×2000:</p>
 <div class="lado pq">
 <div>
 <table>
-  <tr><th class="l">Trecho do programa</th><th>tempo (s)</th><th>% do total</th></tr>
-  <tr><td class="l">alocar e zerar o vetor (serial)</td><td>0,009044</td><td>0,390%</td></tr>
-  <tr><td class="l"><b>cálculo dos pixels (HOTSPOT)</b></td><td><b>2,306694</b></td><td><b>99,52%</b></td></tr>
-  <tr><td class="l">soma do checksum</td><td>0,002040</td><td>0,088%</td></tr>
-  <tr><td class="l">saída (printf)</td><td>0,000024</td><td>0,001%</td></tr>
-  <tr><th class="l">Total</th><th>2,317802</th><th>100%</th></tr>
+  <tr><th class="l">Parte do programa</th><th>tempo (s)</th><th>% do total</th></tr>
+  <tr><td class="l">criar o vetor da imagem</td><td>0,009</td><td>0,39%</td></tr>
+  <tr><td class="l"><b>calcular os pixels</b></td><td><b>2,307</b></td><td><b>99,52%</b></td></tr>
+  <tr><td class="l">somar o checksum</td><td>0,002</td><td>0,09%</td></tr>
+  <tr><td class="l">imprimir o resultado</td><td>0,00002</td><td>0,001%</td></tr>
+  <tr><th class="l">Total</th><th>2,318</th><th>100%</th></tr>
 </table>
-<p class="nota">Tempo por linha: mínimo 0,008 ms, médio 1,153 ms, máximo 4,159 ms — a linha mais cara custa
-<b>523×</b> a mais barata.</p>
+<p class="nota">A parte que mais consome tempo (o <b>hotspot</b>) é o cálculo dos pixels: <b>99,5%</b>. É ela que
+vale a pena paralelizar.</p>
 </div>
 <div>
 <table>
-  <tr><th class="l">Faixa de linhas</th><th>% do cálculo</th><th class="l">carga</th></tr>
+  <tr><th class="l">Linhas da imagem</th><th>% do tempo</th><th class="l"></th></tr>
   <tr><td class="l n">0–199</td><td>0,10%</td><td class="b"><span class="barra" style="width:1px"></span></td></tr>
   <tr><td class="l n">200–399</td><td>1,21%</td><td class="b"><span class="barra" style="width:7px"></span></td></tr>
   <tr><td class="l n">400–599</td><td>7,54%</td><td class="b"><span class="barra" style="width:45px"></span></td></tr>
@@ -122,83 +113,81 @@ Imagem 2000×2000, na máquina descrita na seção 4.</p>
 </table>
 </div>
 </div>
-<p><b>Hotspot:</b> o laço duplo que calcula os pixels concentra <b>99,52%</b> do tempo; todo o resto é desprezível. Dentro
-dele, o custo é muito desigual: as linhas do centro da imagem atravessam o conjunto (muitos pixels chegam a 1000 iterações),
-enquanto as linhas das bordas escapam quase imediatamente. As faixas centrais 800–1199 (20% das linhas) concentram
-<b>49,7%</b> do tempo de cálculo. A imagem é simétrica em relação ao eixo real (o conjugado de um ponto do conjunto
-também pertence a ele), por isso o perfil é espelhado entre a metade de cima e a de baixo.</p>
+<p>A tabela da direita mostra o problema principal: <b>as linhas do meio (800 a 1199) levam metade do tempo</b>, e as
+linhas das pontas quase nada. A linha mais cara leva cerca de <b>520 vezes</b> mais que a mais barata. Isso é o
+<b>desbalanceamento de carga</b>: se dividirmos a imagem em pedaços iguais, quem pegar o meio vai trabalhar muito
+e os outros vão ficar parados esperando.</p>
 
-<h2>4. Baseline medido</h2>
-<p><b>Metodologia.</b> Código do professor sem nenhuma alteração, compilado com <code>g++ -O2</code>, como pede o README dos
-baselines. Para cada tamanho: <b>1 execução de aquecimento descartada</b> (carrega programa, bibliotecas e cache) e
-<b>3 execuções medidas</b>; registramos a <b>mediana</b>, que não é puxada por uma execução atrapalhada pelo sistema
-operacional. O tempo é o que o próprio programa imprime: só o cálculo, medido com relógio monotônico
-(<code>CLOCK_MONOTONIC</code>). Tudo é automatizado pelo script <code>scripts/medir.sh</code>, que grava o CSV
-<code>resultados/medicoes.csv</code> e confere o checksum de cada execução.</p>
-<p><b>Máquina:</b> notebook Intel Core i5-9300H @ 2.40GHz — 4 núcleos físicos e 8 lógicos (hyper-threading), 15,4 GB de RAM; ambiente da disciplina em contêiner
-(imagem <code>iesb/pp-lab:2026.2</code>, Ubuntu 24.04, g++ 13.3.0, Open MPI 4.1.6), executado com podman no Linux.</p>
+<h2>4. Baseline: o tempo do programa original</h2>
+<p><b>Como medimos.</b></p>
+<ul>
+  <li>Programa do professor <b>sem nenhuma alteração</b>, compilado com <code>g++ -O2</code> (com otimização).</li>
+  <li>Para cada tamanho: rodamos <b>1 vez para aquecer</b> (e jogamos fora) e depois <b>3 vezes</b>. Usamos a
+      <b>mediana</b> (o valor do meio), porque ela não é afetada se uma das execuções for atrapalhada pelo sistema.</li>
+  <li>O tempo é o que o próprio programa mostra: só o cálculo.</li>
+  <li>Tudo é feito pelo script <code>scripts/medir.sh</code>, que salva os resultados num CSV e confere o checksum.</li>
+  <li><b>Máquina:</b> notebook Intel Core i5-9300H (4 núcleos físicos, 8 com hyper-threading), 16 GB de RAM, Linux,
+      dentro do ambiente da disciplina (contêiner com Ubuntu 24.04, g++ 13.3 e Open MPI 4.1.6).</li>
+</ul>
 <table class="pq">
-  <tr><th>Imagem (W×H)</th><th>pixels</th><th>tempo mediano (s)</th><th>mín – máx (s)</th><th>checksum</th><th>ns por pixel</th></tr>
-  <tr><td>1000×1000</td><td>1.000.000</td><td>0,5796</td><td>0,5783 – 0,5819</td><td>177.507.041</td><td>580</td></tr>
-  <tr><td>1414×1414</td><td>1.999.396</td><td>1,1541</td><td>1,1509 – 1,1604</td><td>354.843.131</td><td>577</td></tr>
-  <tr><td>2000×2000</td><td>4.000.000</td><td>2,3084</td><td>2,3019 – 2,3205</td><td>709.817.858</td><td>577</td></tr>
-  <tr><td>2828×2828</td><td>7.997.584</td><td>4,6213</td><td>4,6121 – 4,6487</td><td>1.419.033.317</td><td>578</td></tr>
-  <tr><td>4000×4000</td><td>16.000.000</td><td>9,2331</td><td>9,2172 – 9,2566</td><td>2.838.911.356</td><td>577</td></tr>
+  <tr><th>Imagem</th><th>pixels</th><th>tempo (mediana)</th><th>tempo por milhão de pixels</th><th>checksum</th></tr>
+  <tr><td>1000×1000</td><td>1 milhão</td><td>0,58 s</td><td>0,58 s</td><td>177.507.041</td></tr>
+  <tr><td>1414×1414</td><td>2 milhões</td><td>1,15 s</td><td>0,58 s</td><td>354.843.131</td></tr>
+  <tr><td>2000×2000</td><td>4 milhões</td><td>2,31 s</td><td>0,58 s</td><td>709.817.858</td></tr>
+  <tr><td>2828×2828</td><td>8 milhões</td><td>4,62 s</td><td>0,58 s</td><td>1.419.033.317</td></tr>
+  <tr><td>4000×4000</td><td>16 milhões</td><td>9,23 s</td><td>0,58 s</td><td>2.838.911.356</td></tr>
 </table>
-<p>O tempo por pixel é praticamente constante, ou seja, o tempo cresce linearmente com W·H, como prevê a complexidade
-(a janela do plano é sempre a mesma, então a média de iterações por pixel quase não muda com a resolução). A variação entre as
-3 medidas ficou abaixo de 1%. O tamanho de referência para os experimentos de speedup será <b>2000×2000</b>
-(≈ 2,31 s): grande o bastante para que os overheads de threads e de comunicação não dominem a medida.</p>
+<p>A cada vez que o número de pixels dobra, o tempo também dobra (cada milhão de pixels custa sempre ~0,58 s),
+como a complexidade previu. As 3 medidas de cada tamanho variaram menos de 1%. Vamos usar a imagem
+<b>2000×2000 (2,31 s)</b> como referência para medir o ganho das versões paralelas.</p>
 
-<h2>5. Fração paralelizável e Lei de Amdahl</h2>
-<p>Consideramos serial tudo o que não é o cálculo dos pixels (alocar e zerar o vetor, somar o checksum, imprimir):
-<b>f = (total − cálculo) / total = 0,48%</b>, portanto a <b>fração paralelizável é 99,52%</b>. Pela Lei de Amdahl,
-<i>S(p) = 1 / (f + (1 − f)/p)</i>:</p>
+<h2>5. Lei de Amdahl: quanto dá para acelerar</h2>
+<p>A Lei de Amdahl diz que a parte do programa que <b>não</b> pode ser paralelizada limita o ganho. Aqui, só o cálculo
+dos pixels é paralelizável; o resto (criar o vetor, somar, imprimir) é a parte serial:</p>
+<ul>
+  <li><b>parte serial: f = 0,48%</b> &nbsp;→&nbsp; <b>parte paralelizável: 99,52%</b>;</li>
+  <li>fórmula do ganho máximo (speedup) com p núcleos: <b>S(p) = 1 / (f + (1 − f) / p)</b>.</li>
+</ul>
 <table>
-  <tr><th class="l">p (threads ou processos)</th><th>2</th><th>4</th><th>8</th><th>16</th><th>p → ∞</th></tr>
-  <tr><td class="l">speedup máximo de Amdahl</td><td>1,99</td><td>3,94</td><td>7,74</td><td>14,93</td><td>209</td></tr>
-  <tr><td class="l">teto se dividirmos em <b>blocos contíguos</b> de linhas</td><td>2,00</td><td>2,12</td><td>3,41</td><td>6,17</td><td>—</td></tr>
+  <tr><th class="l">Núcleos (p)</th><th>2</th><th>4</th><th>8</th><th>16</th></tr>
+  <tr><td class="l">Ganho máximo pela Lei de Amdahl</td><td>1,99×</td><td>3,94×</td><td>7,74×</td><td>14,93×</td></tr>
+  <tr><td class="l">Ganho máximo se dividirmos a imagem em <b>pedaços iguais</b></td><td>2,00×</td><td>2,12×</td><td>3,41×</td><td>6,17×</td></tr>
 </table>
-<p>Amdahl só enxerga a parte serial e supõe que a parte paralela se divide <b>igualmente</b>. Neste problema isso não acontece:
-a segunda linha da tabela, calculada com o tempo medido de cada linha, mostra o speedup máximo se cada unidade recebesse um
-bloco contíguo de H/p linhas — o tempo paralelo passa a ser o do bloco mais caro. Com 4 unidades, as duas do meio ficam com quase
-todo o trabalho e o teto cai de 3,94 para <b>2,12</b>. Com 2 unidades o bloco funciona bem por causa da simetria da imagem.
-<b>Conclusão: o limite prático aqui não é a fração serial, e sim o desbalanceamento de carga</b>; o plano abaixo é desenhado
-para atacá-lo. A máquina tem 4 núcleos físicos: além disso, o ganho depende do hyper-threading (núcleos lógicos),
-que não dobra o desempenho.</p>
+<p>A primeira linha é o que Amdahl promete. Mas Amdahl supõe que o trabalho se divide <b>igualmente</b>, e aqui não
+se divide. A segunda linha, calculada com o tempo de cada linha da imagem, mostra o que acontece se cada núcleo pegar
+um pedaço igual de linhas: com 4 núcleos, os dois do meio ficam com quase tudo, e o ganho cai de 3,94× para
+<b>2,12×</b>. Com 2 núcleos funciona bem porque a imagem é espelhada (as duas metades custam o mesmo).</p>
+<div class="resumo"><b>Conclusão:</b> o que limita este problema não é a parte serial (que é minúscula), e sim o
+<b>desbalanceamento de carga</b>. O plano de paralelização precisa dividir o trabalho de forma justa.</div>
 
 <h2>6. Plano de paralelização</h2>
-<h3>6.1 OpenMP (memória compartilhada)</h3>
+<p><b>Ideia geral:</b> dividir as <b>linhas</b> da imagem entre os núcleos. Cada linha pode ser calculada sozinha.</p>
+<p><b>OpenMP (memória compartilhada — threads dentro de um mesmo programa):</b></p>
 <ul>
-  <li><b>Padrão: laço paralelo</b> (<code>#pragma omp parallel for</code>) sobre as <b>linhas</b> da imagem. As linhas são
-      independentes e todas as threads enxergam o mesmo vetor <code>hist</code>. Não usaremos <code>sections</code> (não há
-      blocos de código diferentes) nem <code>tasks</code> (não há divisão e conquista). A linha é a unidade porque cada thread
-      escreve um trecho contíguo e grande da memória, o que evita <i>false sharing</i>.</li>
-  <li><b>Condições de corrida:</b> a imagem não tem corrida (cada posição é escrita por uma única thread); o <b>checksum</b> tem,
-      se todas as threads somarem na mesma variável. Usaremos <code>reduction(+:soma)</code> — cópia privada por thread, somadas
-      no fim — e vamos medir também <code>critical</code> e <code>atomic</code> para justificar a escolha.</li>
-  <li><b>Escalonamento:</b> por causa do perfil da seção 3, esperamos que <code>schedule(static)</code> fique perto do teto em
-      blocos e que <code>schedule(dynamic, 1)</code> (fila de linhas: quem termina pega a próxima) se aproxime do ideal. Vamos
-      comparar <code>static</code>, <code>dynamic</code> e <code>guided</code> com 1, 2, 4, 8 e 16 threads.</li>
+  <li>usar <code>#pragma omp parallel for</code> no laço das linhas: as threads dividem as linhas entre si e todas
+      escrevem no mesmo vetor da imagem (cada uma em linhas diferentes, então não há conflito);</li>
+  <li>o checksum tem um risco: se todas as threads somarem na mesma variável ao mesmo tempo, somas se perdem
+      (<b>condição de corrida</b>). Solução: <code>reduction(+:soma)</code>, em que cada thread soma na sua própria
+      variável e o OpenMP junta tudo no final. Também vamos testar <code>critical</code> e <code>atomic</code> para
+      comparar;</li>
+  <li>para resolver o desbalanceamento, usar <code>schedule(dynamic)</code>: funciona como uma <b>fila</b> — cada
+      thread pega uma linha, e quem termina pega a próxima. Vamos comparar com <code>static</code> (pedaços iguais
+      definidos no início) e <code>guided</code> (pedaços que vão diminuindo).</li>
 </ul>
-<h3>6.2 MPI (memória distribuída)</h3>
+<p><b>MPI (memória distribuída — vários programas separados que trocam mensagens):</b></p>
 <ul>
-  <li><b>Decomposição de domínio por linhas</b>: cada processo (rank) calcula um subconjunto das linhas num vetor local. Vamos
-      comparar <b>bloco</b> (rank r fica com H/p linhas contíguas — desbalanceado, como previsto acima) com <b>cíclica</b>
-      (rank r fica com as linhas r, r+p, r+2p, … — como distribuir cartas, cada rank recebe um pouco de cada região).</li>
-  <li><b>Comunicação com coletivas:</b> <code>MPI_Bcast</code> dos parâmetros (W, H, modo) a partir do rank 0;
-      <code>MPI_Gatherv</code> para juntar as linhas no rank 0 (o "v" porque cada rank pode ter um número diferente de linhas);
-      <code>MPI_Reduce</code> com <code>MPI_SUM</code> para o checksum e com <code>MPI_MAX</code> para o tempo (o programa só
-      termina quando o rank mais lento termina).</li>
-  <li><b>Overhead esperado:</b> juntar a imagem 2000×2000 movimenta 32 MB até o rank 0, um custo que não diminui com mais
-      processos; vamos medir a fração do tempo gasta em comunicação para cada número de processos (1, 2, 4, 8).</li>
+  <li>cada processo calcula uma parte das linhas. Vamos comparar duas formas de dividir: <b>em bloco</b> (cada
+      processo pega um pedaço seguido de linhas — vai ficar desbalanceado) e <b>cíclica</b> (as linhas são
+      distribuídas como cartas de baralho (com 4 processos: 0, 4, 8… para o primeiro, 1, 5, 9… para o segundo, e assim por diante) —
+      todo mundo recebe linhas caras e baratas);</li>
+  <li>comunicação com operações coletivas: <code>MPI_Bcast</code> (o processo 0 manda o tamanho da imagem para todos),
+      <code>MPI_Gatherv</code> (o processo 0 junta as linhas de todos) e <code>MPI_Reduce</code> (soma os checksums
+      parciais);</li>
+  <li>juntar a imagem tem um custo (32 MB de dados); vamos medir quanto desse custo aparece com 1, 2, 4 e 8 processos.</li>
 </ul>
-<h3>6.3 Validação e experimentos</h3>
-<p>Toda execução paralela terá o checksum comparado com o do baseline do mesmo tamanho (e, no OpenMP, a imagem pixel a pixel).
-Para garantir resultados idênticos, os programas serão compilados com <code>-ffp-contract=off</code>, impedindo que o compilador
-funda multiplicação e soma (FMA) e mude o arredondamento. Mediremos <b>escalabilidade forte</b> (imagem fixa 2000×2000, variando
-threads/processos) e <b>fraca</b> (~1 milhão de pixels por unidade: lado = 1000·√p), com o mesmo protocolo da seção 4, e
-compararemos speedup e eficiência com as previsões desta seção.</p>
+<p><b>Como vamos conferir:</b> toda versão paralela tem que dar o <b>mesmo checksum</b> do programa original. Vamos
+medir o tempo com o mesmo método da seção 4, com 1, 2, 4, 8 e 16 threads/processos, e comparar o ganho real com as
+previsões desta seção.</p>
 
 </body>
 </html>
