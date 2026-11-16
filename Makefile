@@ -3,7 +3,7 @@
 #
 #   make            compila tudo (sequencial, perfil, OpenMP, MPI, gráficos)
 #   make medir      roda o script de medição (gera resultados/*.csv, ~3 min)
-#   make graficos   gera os 3 gráficos SVG a partir dos CSV
+#   make graficos   gera os gráficos SVG e resultados/resumo.md a partir do CSV
 #   make demo       roteiro rápido para a apresentação (cada frente roda a sua parte)
 #   make limpar     apaga os executáveis
 #

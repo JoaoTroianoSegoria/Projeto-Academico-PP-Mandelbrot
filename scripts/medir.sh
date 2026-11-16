@@ -11,7 +11,9 @@
 #   - guardamos a MEDIANA das 3 (não a média: uma execução atrapalhada pelo
 #     sistema operacional não puxa o resultado);
 #   - o tempo é o que o próprio programa imprime (só o cálculo, como no baseline);
-#   - TODA execução tem o checksum conferido com o do baseline do professor.
+#   - TODA execução tem o checksum conferido com o do baseline do professor;
+#   - no MPI também guardamos a mediana do tempo de COMUNICAÇÃO (coluna
+#     comunicacao_s), para analisar o overhead em função do número de processos.
 #
 # EXPERIMENTOS:
 #   baseline -> o sequencial do professor em todos os tamanhos usados (gabarito)
@@ -75,34 +77,40 @@ echo
 # extrai "checksum=NNN" e "tempo=X.XXX" da primeira linha da saída
 checksum_de() { grep -m1 -o 'checksum=[0-9-]*' <<<"$1" | cut -d= -f2; }
 tempo_de()    { grep -m1 -o 'tempo=[0-9.]*'     <<<"$1" | cut -d= -f2; }
+# só o MPI imprime "comunicacao=X.XXX s" (calculado em C++ no mpi/mandelbrot_mpi.cpp)
+comunicacao_de() { grep -m1 -o 'comunicacao=[0-9.]*' <<<"$1" | cut -d= -f2 || true; }
 mediana()     { printf '%s\n' "$@" | sort -g | awk '{v[NR]=$1} END {print v[int((NR+1)/2)]}'; }
 
 declare -A GABARITO       # GABARITO[lado] = checksum do baseline
 declare -A T_SEQ          # T_SEQ[lado]    = tempo do baseline
 FALHAS=0
 
-echo "experimento,versao,variante,p,W,H,tempo_s,tempo_min_s,tempo_max_s,checksum,checksum_baseline,ok" > "$CSV"
+echo "experimento,versao,variante,p,W,H,tempo_s,tempo_min_s,tempo_max_s,checksum,checksum_baseline,ok,comunicacao_s" > "$CSV"
 
 # mede "comando..." e grava uma linha no CSV
 # uso: medir EXPERIMENTO VERSAO VARIANTE P LADO comando...
 medir() {
     local exp=$1 versao=$2 variante=$3 p=$4 lado=$5; shift 5
     "$@" >/dev/null 2>&1 || true                       # aquecimento (descartado)
-    local tempos=() soma="" saida
+    local tempos=() comunicacoes=() soma="" saida
     for _ in $(seq $REPETICOES); do
         saida=$("$@" 2>&1) || { echo "ERRO ao executar: $*"; echo "$saida"; exit 1; }
         local s; s=$(checksum_de "$saida")
         # se UMA das repetições der checksum diferente, o resultado é marcado como errado
         if [ -n "$soma" ] && [ "$s" != "$soma" ]; then soma="INCONSISTENTE"; else soma=${soma:-$s}; fi
         tempos+=("$(tempo_de "$saida")")
+        local c; c=$(comunicacao_de "$saida")
+        [ -n "$c" ] && comunicacoes+=("$c")
     done
     local med min max
     med=$(mediana "${tempos[@]}")
     min=$(printf '%s\n' "${tempos[@]}" | sort -g | head -1)
     max=$(printf '%s\n' "${tempos[@]}" | sort -g | tail -1)
+    local com=""                                       # vazio para baseline e OpenMP
+    [ ${#comunicacoes[@]} -gt 0 ] && com=$(mediana "${comunicacoes[@]}")
     local gab=${GABARITO[$lado]:-$soma} ok=1
     [ "$soma" = "$gab" ] || { ok=0; FALHAS=$((FALHAS + 1)); }
-    echo "$exp,$versao,$variante,$p,$lado,$lado,$med,$min,$max,$soma,$gab,$ok" >> "$CSV"
+    echo "$exp,$versao,$variante,$p,$lado,$lado,$med,$min,$max,$soma,$gab,$ok,$com" >> "$CSV"
     printf '  %-8s %-8s %-8s p=%-3s %5sx%-5s  %9.4f s   %s\n' "$exp" "$versao" "$variante" "$p" \
            "$lado" "$lado" "$med" "$([ $ok = 1 ] && echo igual || echo 'CHECKSUM DIFERENTE!')"
 }

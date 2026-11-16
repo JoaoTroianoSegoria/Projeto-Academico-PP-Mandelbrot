@@ -8,6 +8,7 @@
  *      graficos/speedup_openmp.svg    speedup do OpenMP: static, dynamic, guided, ideal e Amdahl
  *      graficos/speedup_mpi.svg       speedup do MPI: bloco, ciclico, ideal e Amdahl
  *      graficos/eficiencia.svg        eficiência na escalabilidade forte e fraca
+ *      graficos/comunicacao_mpi.svg   overhead de comunicação do MPI (% do tempo) x processos
  *
  * Escrito em C++ puro (sem Python/matplotlib) para rodar no mesmo container do
  * projeto, que só tem g++. SVG é texto: abre em qualquer navegador e no GitHub.
@@ -33,6 +34,7 @@ struct Linha {
     string experimento, versao, variante;
     int p = 0, W = 0;
     double tempo = 0;
+    double comunicacao = -1;   // só no MPI (coluna comunicacao_s); -1 = não se aplica
     bool ok = false;
 };
 
@@ -57,6 +59,7 @@ vector<Linha> ler_csv(const string& caminho) {
         Linha l;
         l.experimento = c[0]; l.versao = c[1]; l.variante = c[2];
         l.p = stoi(c[3]); l.W = stoi(c[4]); l.tempo = stod(c[6]); l.ok = (c[11] == "1");
+        if (c.size() > 12 && !c[12].empty()) l.comunicacao = stod(c[12]);
         linhas.push_back(l);
     }
     return linhas;
@@ -158,6 +161,16 @@ vector<pair<double, double>> pontos(const vector<Linha>& d, const string& exp, c
     vector<pair<double, double>> v;
     for (auto& l : d)
         if (l.experimento == exp && l.versao == versao && l.variante == variante) v.push_back({ (double)l.p, l.tempo });
+    sort(v.begin(), v.end());
+    return v;
+}
+
+// overhead de comunicação em % do tempo total: (p, 100 * comunicacao / tempo)
+vector<pair<double, double>> comunicacao_pct(const vector<Linha>& d, const string& exp, const string& variante) {
+    vector<pair<double, double>> v;
+    for (auto& l : d)
+        if (l.experimento == exp && l.versao == "mpi" && l.variante == variante && l.comunicacao >= 0)
+            v.push_back({ (double)l.p, 100 * l.comunicacao / l.tempo });
     sort(v.begin(), v.end());
     return v;
 }
@@ -292,6 +305,18 @@ int main() {
                 "threads / processos", "eficiencia", s, true);
     }
 
+    // 5) overhead de comunicação do MPI
+    auto com_bl = comunicacao_pct(d, "forte", "bloco"), com_ci = comunicacao_pct(d, "forte", "ciclico");
+    auto com_fr = comunicacao_pct(d, "fraca", "ciclico");
+    if (!com_bl.empty() || !com_ci.empty()) {
+        vector<Serie> s = { { "forte - bloco", COR_BLOCO, false, com_bl },
+                            { "forte - ciclico", COR_CICLICO, false, com_ci },
+                            { "fraca - ciclico", COR_GUIDED, false, com_fr } };
+        grafico("graficos/comunicacao_mpi.svg", "MPI: overhead de comunicacao por numero de processos",
+                "comunicacao = tempo total - maior tempo de calculo (Gatherv + Reduce + montar a imagem)",
+                "processos (mpirun -np)", "% do tempo total", s);
+    }
+
     // ---- validação final
     int erros = 0;
     for (auto& l : d) if (!l.ok) erros++;
@@ -316,6 +341,15 @@ int main() {
                             l.p, l.W, l.W, l.tempo, t1 > 0 ? (fmt(100 * t1 / l.tempo, 1) + "%").c_str() : "-");
                 }
         }
+        fprintf(md, "\nOverhead de comunicação do MPI (comunicacao = tempo total - maior tempo de cálculo):\n\n"
+                    "| decomposição | experimento | p | imagem | tempo total (s) | comunicação (ms) | %% do tempo |\n"
+                    "|---|---|---:|---:|---:|---:|---:|\n");
+        for (string exp : { "forte", "fraca" })
+            for (string var : { "bloco", "ciclico" })
+                for (auto& l : d)
+                    if (l.experimento == exp && l.versao == "mpi" && l.variante == var && l.comunicacao >= 0)
+                        fprintf(md, "| %s | %s | %d | %dx%d | %.4f | %.1f | %.1f%% |\n", var.c_str(), exp.c_str(),
+                                l.p, l.W, l.W, l.tempo, 1000 * l.comunicacao, 100 * l.comunicacao / l.tempo);
         fprintf(md, "\nChecksum: %s\n", erros == 0 ? "todas as execuções iguais ao baseline." : "HÁ EXECUÇÕES DIFERENTES DO BASELINE!");
         fclose(md);
         printf("  gerado: resultados/resumo.md\n");
