@@ -30,34 +30,34 @@
 <line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#7b8794"/>
 <text x="347.5" y="505.0" font-size="13" text-anchor="middle" fill="#1f2933">threads / processos</text>
 <text transform="translate(20 265.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#1f2933">eficiencia</text>
-<path d="M75.0 136.8 L211.2 142.0 L347.5 146.2 L483.8 150.7 L620.0 233.0" fill="none" stroke="#dc2626" stroke-width="2.5"/>
-<circle cx="75.0" cy="136.8" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=1 -> 99.45</title></circle>
-<circle cx="211.2" cy="142.0" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=2 -> 97.86</title></circle>
-<circle cx="347.5" cy="146.2" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=4 -> 96.57</title></circle>
-<circle cx="483.8" cy="150.7" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=8 -> 95.17</title></circle>
-<circle cx="620.0" cy="233.0" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=16 -> 69.85</title></circle>
+<path d="M75.0 135.3 L211.2 139.6 L347.5 143.2 L483.8 203.9 L620.0 326.4" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+<circle cx="75.0" cy="135.3" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=1 -> 99.91</title></circle>
+<circle cx="211.2" cy="139.6" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=2 -> 98.58</title></circle>
+<circle cx="347.5" cy="143.2" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=4 -> 97.48</title></circle>
+<circle cx="483.8" cy="203.9" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=8 -> 78.81</title></circle>
+<circle cx="620.0" cy="326.4" r="4" fill="#dc2626"><title>forte - OpenMP dynamic: p=16 -> 41.11</title></circle>
 <line x1="640.0" y1="80.0" x2="666.0" y2="80.0" stroke="#dc2626" stroke-width="2.5"/>
 <text x="674.0" y="84.0" font-size="13" fill="#1f2933">forte - OpenMP dynamic</text>
-<path d="M75.0 141.2 L211.2 146.3 L347.5 149.7 L483.8 164.1" fill="none" stroke="#ea580c" stroke-width="2.5"/>
-<circle cx="75.0" cy="141.2" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=1 -> 98.08</title></circle>
-<circle cx="211.2" cy="146.3" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=2 -> 96.52</title></circle>
-<circle cx="347.5" cy="149.7" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=4 -> 95.48</title></circle>
-<circle cx="483.8" cy="164.1" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=8 -> 91.03</title></circle>
+<path d="M75.0 138.3 L211.2 143.6 L347.5 148.3 L483.8 206.5" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="75.0" cy="138.3" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=1 -> 98.99</title></circle>
+<circle cx="211.2" cy="143.6" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=2 -> 97.34</title></circle>
+<circle cx="347.5" cy="148.3" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=4 -> 95.92</title></circle>
+<circle cx="483.8" cy="206.5" r="4" fill="#ea580c"><title>forte - MPI ciclico: p=8 -> 77.99</title></circle>
 <line x1="640.0" y1="104.0" x2="666.0" y2="104.0" stroke="#ea580c" stroke-width="2.5"/>
 <text x="674.0" y="108.0" font-size="13" fill="#1f2933">forte - MPI ciclico</text>
-<path d="M75.0 135.0 L211.2 137.5 L347.5 136.9 L483.8 135.9 L620.0 168.2" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+<path d="M75.0 135.0 L211.2 139.4 L347.5 149.4 L483.8 191.8 L620.0 328.0" fill="none" stroke="#2563eb" stroke-width="2.5"/>
 <circle cx="75.0" cy="135.0" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=1 -> 100.00</title></circle>
-<circle cx="211.2" cy="137.5" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=2 -> 99.22</title></circle>
-<circle cx="347.5" cy="136.9" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=4 -> 99.41</title></circle>
-<circle cx="483.8" cy="135.9" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=8 -> 99.74</title></circle>
-<circle cx="620.0" cy="168.2" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=16 -> 89.78</title></circle>
+<circle cx="211.2" cy="139.4" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=2 -> 98.65</title></circle>
+<circle cx="347.5" cy="149.4" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=4 -> 95.57</title></circle>
+<circle cx="483.8" cy="191.8" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=8 -> 82.52</title></circle>
+<circle cx="620.0" cy="328.0" r="4" fill="#2563eb"><title>fraca - OpenMP dynamic: p=16 -> 40.63</title></circle>
 <line x1="640.0" y1="128.0" x2="666.0" y2="128.0" stroke="#2563eb" stroke-width="2.5"/>
 <text x="674.0" y="132.0" font-size="13" fill="#1f2933">fraca - OpenMP dynamic</text>
-<path d="M75.0 135.0 L211.2 143.2 L347.5 148.1 L483.8 164.8" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+<path d="M75.0 135.0 L211.2 139.0 L347.5 145.6 L483.8 188.4" fill="none" stroke="#16a34a" stroke-width="2.5"/>
 <circle cx="75.0" cy="135.0" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=1 -> 100.00</title></circle>
-<circle cx="211.2" cy="143.2" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=2 -> 97.49</title></circle>
-<circle cx="347.5" cy="148.1" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=4 -> 95.97</title></circle>
-<circle cx="483.8" cy="164.8" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=8 -> 90.85</title></circle>
+<circle cx="211.2" cy="139.0" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=2 -> 98.78</title></circle>
+<circle cx="347.5" cy="145.6" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=4 -> 96.72</title></circle>
+<circle cx="483.8" cy="188.4" r="4" fill="#16a34a"><title>fraca - MPI ciclico: p=8 -> 83.58</title></circle>
 <line x1="640.0" y1="152.0" x2="666.0" y2="152.0" stroke="#16a34a" stroke-width="2.5"/>
 <text x="674.0" y="156.0" font-size="13" fill="#1f2933">fraca - MPI ciclico</text>
 <path d="M75.0 135.0 L620.0 135.0" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 4"/>

@@ -34,24 +34,24 @@
 <line x1="75.0" y1="70.0" x2="75.0" y2="460.0" stroke="#7b8794"/>
 <text x="347.5" y="505.0" font-size="13" text-anchor="middle" fill="#1f2933">processos (mpirun -np)</text>
 <text transform="translate(20 265.0) rotate(-90)" font-size="13" text-anchor="middle" fill="#1f2933">speedup</text>
-<path d="M75.0 417.3 L256.7 376.6 L438.3 371.5 L620.0 321.9" fill="none" stroke="#9333ea" stroke-width="2.5"/>
-<circle cx="75.0" cy="417.3" r="4" fill="#9333ea"><title>bloco: p=1 -> 0.98</title></circle>
-<circle cx="256.7" cy="376.6" r="4" fill="#9333ea"><title>bloco: p=2 -> 1.92</title></circle>
-<circle cx="438.3" cy="371.5" r="4" fill="#9333ea"><title>bloco: p=4 -> 2.04</title></circle>
-<circle cx="620.0" cy="321.9" r="4" fill="#9333ea"><title>bloco: p=8 -> 3.19</title></circle>
+<path d="M75.0 417.2 L256.7 375.6 L438.3 376.6 L620.0 338.4" fill="none" stroke="#9333ea" stroke-width="2.5"/>
+<circle cx="75.0" cy="417.2" r="4" fill="#9333ea"><title>bloco: p=1 -> 0.99</title></circle>
+<circle cx="256.7" cy="375.6" r="4" fill="#9333ea"><title>bloco: p=2 -> 1.95</title></circle>
+<circle cx="438.3" cy="376.6" r="4" fill="#9333ea"><title>bloco: p=4 -> 1.92</title></circle>
+<circle cx="620.0" cy="338.4" r="4" fill="#9333ea"><title>bloco: p=8 -> 2.81</title></circle>
 <line x1="640.0" y1="80.0" x2="666.0" y2="80.0" stroke="#9333ea" stroke-width="2.5"/>
 <text x="674.0" y="84.0" font-size="13" fill="#1f2933">bloco</text>
-<path d="M75.0 417.5 L256.7 376.3 L438.3 294.5 L620.0 144.4" fill="none" stroke="#ea580c" stroke-width="2.5"/>
-<circle cx="75.0" cy="417.5" r="4" fill="#ea580c"><title>ciclico: p=1 -> 0.98</title></circle>
-<circle cx="256.7" cy="376.3" r="4" fill="#ea580c"><title>ciclico: p=2 -> 1.93</title></circle>
-<circle cx="438.3" cy="294.5" r="4" fill="#ea580c"><title>ciclico: p=4 -> 3.82</title></circle>
-<circle cx="620.0" cy="144.4" r="4" fill="#ea580c"><title>ciclico: p=8 -> 7.28</title></circle>
+<path d="M75.0 417.1 L256.7 375.6 L438.3 293.7 L620.0 189.6" fill="none" stroke="#ea580c" stroke-width="2.5"/>
+<circle cx="75.0" cy="417.1" r="4" fill="#ea580c"><title>ciclico: p=1 -> 0.99</title></circle>
+<circle cx="256.7" cy="375.6" r="4" fill="#ea580c"><title>ciclico: p=2 -> 1.95</title></circle>
+<circle cx="438.3" cy="293.7" r="4" fill="#ea580c"><title>ciclico: p=4 -> 3.84</title></circle>
+<circle cx="620.0" cy="189.6" r="4" fill="#ea580c"><title>ciclico: p=8 -> 6.24</title></circle>
 <line x1="640.0" y1="104.0" x2="666.0" y2="104.0" stroke="#ea580c" stroke-width="2.5"/>
 <text x="674.0" y="108.0" font-size="13" fill="#1f2933">ciclico</text>
 <path d="M75.0 416.7 L256.7 373.3 L438.3 286.7 L620.0 113.3" fill="none" stroke="#9aa5b1" stroke-width="1.5" stroke-dasharray="6 4"/>
 <line x1="640.0" y1="128.0" x2="666.0" y2="128.0" stroke="#9aa5b1" stroke-width="2.5" stroke-dasharray="6 4"/>
 <text x="674.0" y="132.0" font-size="13" fill="#1f2933">ideal (S = p)</text>
-<path d="M75.0 416.7 L256.7 374.0 L438.3 290.6 L620.0 131.0" fill="none" stroke="#1f2933" stroke-width="1.5" stroke-dasharray="6 4"/>
+<path d="M75.0 416.7 L256.7 373.7 L438.3 289.1 L620.0 124.6" fill="none" stroke="#1f2933" stroke-width="1.5" stroke-dasharray="6 4"/>
 <line x1="640.0" y1="152.0" x2="666.0" y2="152.0" stroke="#1f2933" stroke-width="2.5" stroke-dasharray="6 4"/>
-<text x="674.0" y="156.0" font-size="13" fill="#1f2933">Amdahl (f = 0.77%)</text>
+<text x="674.0" y="156.0" font-size="13" fill="#1f2933">Amdahl (f = 0.48%)</text>
 </svg>
