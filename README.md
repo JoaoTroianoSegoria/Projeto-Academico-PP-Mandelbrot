@@ -34,7 +34,6 @@ pertence ao conjunto). O resultado de cada pixel é o número de iterações; o 
 | `scripts/demo.sh` | roteiro da demonstração ao vivo | — |
 | `Dockerfile`, `Makefile` | ambiente igual ao do laboratório e compilação de tudo | — |
 | `docs/marco1/` | Marco 1: PDF (análise, perfil, baseline, Amdahl, plano) + fonte HTML e figura | 1 |
-| `docs/GUIA_DE_ESTUDO.md` | fundamentos do básico ao avançado e perguntas e respostas para a arguição | — |
 
 ## Como rodar do zero
 
